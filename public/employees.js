@@ -37,7 +37,7 @@ async function deleteEmployee(row_id){
         let payload = {}
         payload.employeeID = row_id
 
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/delete-Employee`, {
+        const response = await fetch(`http://${SERVER}:${PORT}/delete-Employee`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ async function updateEmployee(edit_button, emp_id){
         payload.position = document.getElementById('`employees-editPosition-' + emp_id + '`').value
         payload.phoneNumber = document.getElementById('`employees-editPhoneNumber-' + emp_id + '`').value
         
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/update-Employee`, {
+        const response = await fetch(`http://${SERVER}:${PORT}/update-Employee`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

@@ -1,2 +1,2 @@
-const PORT = 6333;
-const SERVER = 'flip3';
+const PORT = 3000;
+const SERVER = 'localhost';

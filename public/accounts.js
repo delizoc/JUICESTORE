@@ -33,7 +33,7 @@ async function deleteAccount(row_id){
     let payload = {}
     payload.accountID = row_id
 
-const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/delete-Account`, {
+const response = await fetch(`http://${SERVER}:${PORT}/delete-Account`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ async function updateAccount(edit_button, acc_ID){
             payload.address = document.getElementById('`accounts-editAddress-' + acc_ID + '`').value
         }
 
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/update-Account`, {
+        const response = await fetch(`http://${SERVER}:${PORT}/update-Account`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

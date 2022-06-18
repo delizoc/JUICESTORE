@@ -28,7 +28,7 @@ async function addOrder() {
     data.employeeID = oEmp.value;
 
     try {
-      const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/insert-Order`, {
+      const response = await fetch(`http://${SERVER}:${PORT}/insert-Order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -37,13 +37,13 @@ async function addOrder() {
       });
 
       if (response.status == 200) {
-        let newOrder = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/orders-latest`, {
+        let newOrder = await fetch(`http://${SERVER}:${PORT}/orders-latest`, {
           method: 'GET'
         }
         )
         let json_response = await newOrder.json();
 
-        const newOrders = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/insert-PurchaseOrder`, {
+        const newOrders = await fetch(`http://${SERVER}:${PORT}/insert-PurchaseOrder`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ async function deleteOrder(row_id) {
   let payload = {}
   payload.orderID = row_id
 
-  const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/delete-Order`, {
+  const response = await fetch(`http://${SERVER}:${PORT}/delete-Order`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ async function updateOrder(edit_button, order_id) {
     payload.customerID = document.getElementById('`orders-editCustomerID-' + order_id + '`').value
     payload.employeeID = document.getElementById('`orders-editEmployeeID-' + order_id + '`').value
 
-    const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/update-Order`, {
+    const response = await fetch(`http://${SERVER}:${PORT}/update-Order`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

@@ -7,13 +7,14 @@ const express = require('express');   // We are using the express library for th
 const app     = express();            // We need to instantiate an express object to interact with the server in our code
 
 var path = require('path');
-app.set('port', 6333);
+const HOSTNAME = process.env.HOSTNAME || 'localhost'
+app.set('port', 3000);
 
 
 // Set up handlebars
 const exp_handle = require('express-handlebars')
 app.engine('handlebars', exp_handle())
-app.set('views', path.join(__dirname, '../JUICESTORE-UI/views'))
+app.set('views', path.join(__dirname, '../JUICESTORE/views'))
 app.set('view engine', 'handlebars')
 /*
     ROUTES
@@ -405,5 +406,5 @@ app.use(function(err, req, res, next){
 
 // path to server printed to console
 app.listen(app.get('port'), function(){
-  console.log(`Express started on http://${process.env.HOSTNAME}:${app.get('port')}; press Ctrl-C to terminate.`);
+  console.log(`Express started on http://${HOSTNAME}:${app.get('port')}; press Ctrl-C to terminate.`);
 });

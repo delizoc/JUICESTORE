@@ -34,7 +34,7 @@ async function deleteCustomer(row_id){
         let payload = {}
         payload.customerID = row_id
 
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/delete-Customer`, {
+        const response = await fetch(`http://${SERVER}:${PORT}/delete-Customer`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ async function updateCustomer(edit_button, cust_id){
         payload.fname = document.getElementById('`customers-editFirstName-' + cust_id + '`').value
         payload.lname = document.getElementById('`customers-editLastName-' + cust_id + '`').value
         
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/update-Customer`, {
+        const response = await fetch(`http://${SERVER}:${PORT}/update-Customer`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

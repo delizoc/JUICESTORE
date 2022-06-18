@@ -54,7 +54,7 @@ async function deleteItem(row_id){
         let payload = {}
         payload.itemID = row_id
 
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/delete-Item`, {
+        const response = await fetch(`http://${SERVER}:${PORT}/delete-Item`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ async function updateItem(edit_button, item_id){
         payload.name = document.getElementById('`items-editName-' + item_id + '`').value
         payload.price = document.getElementById('`items-editPrice-' + item_id + '`').value
         
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}update-Item`, {
+        const response = await fetch(`http://${SERVER}:${PORT}update-Item`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

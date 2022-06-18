@@ -34,7 +34,7 @@ async function deletepurchaseOrder(order_id, item_id){
         payload.orderID = order_id
         payload.itemID = item_id
 
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/delete-purchaseOrder`, {
+        const response = await fetch(`http://${SERVER}:${PORT}/delete-purchaseOrder`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ async function updatepurchaseOrder(edit_button, order_ID, item_ID){
         payload.orderID = document.getElementById('`purchaseOrders-editOrderID-' + order_ID + '-' + item_ID + '`').value
         payload.itemID = document.getElementById('`purchaseOrders-editItemID-' + order_ID + '-' + item_ID  + '`').value
         
-        const response = await fetch(`http://${SERVER}.engr.oregonstate.edu:${PORT}/update-purchaseOrder`, {
+        const response = await fetch(`http://${SERVER}:${PORT}/update-purchaseOrder`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
