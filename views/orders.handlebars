@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="keywords">
+    <meta content="" name="description">  
+    <title>Orders</title>
+    <link rel="stylesheet" href="css/style.css">  
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h4 class="title is-4">Add a New Order</h4>
+            <form >
+                <label>Customer ID</label>
+                <br>
+                <div class='select'>
+                    <select name="customerID-input" id="customerID-input-orders">
+                        <option value="">Select a Customer</option>
+                        {{#each custsResults.rows}}
+                        <option value="{{this.customerID}}">{{this.fname}} {{this.lname}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <br>
+                <label>Employee ID</label>
+                <br>
+                <div class='select'>
+                    <select name="employeeID-input" id="employeeID-input-orders">
+                        <option value="">Select an Employee</option>
+                        {{#each empResults.rows}}
+                        <option value="{{this.employeeID}}">{{this.fname}} {{this.lname}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <br>
+                <label>Order Item IDs - Select one or more products</label>
+                <br>
+                <div class='select is-multiple'>
+                        {{#each itemResults.rows}}
+                        <input type = 'checkbox' name="itemID-input" id="itemID-input-orders" multiple='multiple' value="{{this.itemID}}">{{this.name}}</input>
+                        {{/each}}
+                </div>
+                <br>
+                <button id = "add-order-btn" class='button'>Submit</button>
+            </form>
+        <div class="row centered mt grid">
+            <div class id="myTable"></div>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th>orderID</th>
+                        <th>customerID</th>
+                        <th>employeeID</th>
+                        <th>Total Price</th>
+                    </thead>
+                </tr>
+                <tbody>
+                    {{#each ordersResults.rows}}
+                        <tr id=`orders-row-{{this.orderID}}`>
+                            <form>
+                                <td><input id=`orders-editOrderID-{{this.orderID}}` class='input' type="number" value = {{this.orderID}} disabled></td>
+                                <td><input id=`orders-editCustomerID-{{this.orderID}}` class='input' type="number" value = {{this.customerID}} disabled></td>
+                                <td><input id=`orders-editEmployeeID-{{this.orderID}}` class='input' type="number" value = {{this.employeeID}} disabled></td>
+                                <td></td>
+                                <td><button type = 'button' id=`orders-edit-{{this.orderID}}` onclick="updateOrder('`orders-edit-{{this.orderID}}`', {{this.orderID}})" class='editButton button'>Edit</button></td>
+                                <td><button id=`orders-delete-{{this.orderID}}` onclick="deleteOrder({{this.orderID}})" class='deleteButton button'>Delete</button></td>
+                            </form>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </main>    
+    
+</body>
+<script src = "/orders.js"></script>
+</html>

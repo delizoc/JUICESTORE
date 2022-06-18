@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="keywords">
+    <meta content="" name="description">  
+    <title>Customers</title>
+    <link rel="stylesheet" href="css/style.css">  
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h4 class="title is-4">Add a New Customer</h4>
+            <form >
+                <label>First Name</label>
+                <input type = "text" id = "custFirstName-input" placeholder = "First Name" class='input'></input>
+                <br>
+                <label>Last Name</label>
+                <input type = "text" id = "custLastName-input" placeholder="Last Name" class='input'></input>
+                <br>
+                <button id = "add-cust-btn" class='button'>Submit</button>
+            </form>
+        <br>
+        <div class="row centered mt grid">
+            <div class id="myTable"></div>
+            <table id="myTable" class="table">  
+                <thead>
+                    <tr>
+                        <th>customerID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each customersResults.rows}}
+                    <tr id=`customers-row-{{this.customerID}}`>
+                        <form>
+                            <td><input id=`customers-editCustomerID-{{this.customerID}}` class='input' type="number" value = {{this.customerID}} disabled></td>
+                            <td><input id=`customers-editFirstName-{{this.customerID}}` class='input' type="text" value = '{{{this.fname}}}' disabled></td>
+                            <td><input id=`customers-editLastName-{{this.customerID}}` class='input' type="text" value = '{{{this.lname}}}' disabled></td>
+                            <td><button type = 'button' id=`customers-edit-{{this.customerID}}` onclick="updateCustomer('`customers-edit-{{this.customerID}}`', {{this.customerID}})" class='editButton button'>Edit</button></td>
+                            <td><button id=`customers-delete-{{this.customerID}}` onclick="deleteCustomer({{this.customerID}})" class='deleteButton button'>Delete</button></td>
+                        </form>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </main>    
+</body>
+<script src = "/customers.js"></script>
+
+</html>

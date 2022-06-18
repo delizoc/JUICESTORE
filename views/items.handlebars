@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="keywords">
+    <meta content="" name="description">  
+    <title>Items</title>
+    <link rel="stylesheet" href="css/style.css">  
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h4 class="title is-4">Add Item</h4>
+            <form >
+                <label>Item Name</label>
+                <input type = "text" id = "name-input" placeholder = "Name" class='input'></input>
+                <br>
+                <label>Price</label>
+                <input type = "decimal" id = "price-input" placeholder = "0.00" class='input'></input>
+                <br>
+                <button id = "add-item-btn" class='button'>Submit</button>
+            </form>
+
+        <br>
+        <div class="container">
+            <input type = 'text' onkeyup='filterItems()' placeholder="Search" id="search-input" class="input">
+            <button id="search-btn" class="button">Search</button>
+        <br>
+        <div class="row centered mt grid">
+            <div class id="myTable"></div>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </thead>
+                </tr>
+                <tbody>
+                    {{#each itemsResults.rows}}
+                        <tr id=`items-row-{{this.itemID}}`>
+                            <form>
+                                <td><input id=`items-editItemID-{{this.itemID}}` class='input' type="number" value = {{this.itemID}} disabled></td>
+                                <td><input id=`items-editName-{{this.itemID}}` class='input' type="text" value = '{{{this.name}}}' disabled></td>
+                                <td><input id=`items-editPrice-{{this.itemID}}` class='input' type="decimal" value = '{{{this.price}}}' disabled></td>
+                                <td><button type = 'button' id=`items-edit-{{this.itemID}}` onclick="updateItem('`items-edit-{{this.itemID}}`', {{this.itemID}})" class='editButton button'>Edit</button></td>
+                                <td><button id=`items-delete-{{this.itemID}}` onclick="deleteItem({{this.itemID}})" class='deleteButton button'>Delete</button></td>
+                            </form>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+</body>
+<script src = "/items.js"></script>
+</html>

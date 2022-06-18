@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "cs340_delizoc",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "classmysql.engr.oregonstate.edu",
+            "database": "cs340_delizoc",
+            "username": "cs340_delizoc",
+            "password": "2857"
+        }
+    ]
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="keywords">
+    <meta content="" name="description">  
+    <title>Purchase Orders</title>
+    <link rel="stylesheet" href="css/style.css">  
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h4 class="title is-4">Add a New PurchaseOrder</h4>
+            <form >
+                <label>Order ID</label>
+                <br>
+                <div class='select'>
+                    <select name="orderID-input" id="orderID-input-purchaseOrders">
+                        <option value="">Select an Order</option>
+                        {{#each ordResults.rows}}
+                        <option value="{{this.orderID}}">{{this.orderID}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <br>
+                <label>Item ID</label>
+                <br>
+                <div class='select'>
+                    <select name="itemID-input" id="itemID-input-purchaseOrders">
+                        <option value="">Select an Item</option>
+                        {{#each itResults.rows}}
+                        <option value="{{this.itemID}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <br>
+                <button id = "add-purchaseOrder-btn" class='button'>Submit</button>
+            </form>
+        <div class="row centered mt grid">
+            <div class id="myTable"></div>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th>orderID</th>
+                        <th>itemID</th>
+                    </thead>
+                </tr>
+                <tbody>
+                    {{#each purchaseOrdersResults.rows}}
+                        <tr id=`purchaseOrders-row-{{this.ID}}`>
+                            <form>
+                                <td><input id=`purchaseOrders-editOrderID-{{this.orderID}}-{{this.itemID}}` class='input' type="number" value = {{this.orderID}} disabled></td>
+                                <td><input id=`purchaseOrders-editItemID-{{this.orderID}}-{{this.itemID}}` class='input' type="number" value = {{this.itemID}} disabled></td>
+                                <td><button type = 'button' id=`purchaseOrders-edit-{{this.orderID}}-{{this.itemID}}` onclick="updatePurchaseOrder('`purchaseOrders-edit-{{this.orderID}}-{{this.itemID}}`', {{this.orderID}}-{{this.itemID}})" class='editButton button'>Edit</button></td>
+                                <td><button id=`purchaseOrders-delete-{{this.orderID}}-{{this.itemID}}` onclick="deletepurchaseOrder({{this.orderID}}, {{this.itemID}})" class='deleteButton button'>Delete</button></td>
+                            </form>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </main>    
+    
+</body>
+<script src = "/purchaseOrders.js"></script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="keywords">
+    <meta content="" name="description">  
+    <title>Accounts</title>
+    <link rel="stylesheet" href="css/style.css">  
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h4 class="title is-4">Add Employee</h4>
+            <form>
+                <label>First Name</label>
+                <input type = "text" id = "employeeFname-input" placeholder = "" class='input'></input>
+                <br>
+                <label>Last Name</label>
+                <input type = "text" id = "employeeLname-input" placeholder="" class='input'></input>
+                <br>
+                <label>Position</label>
+                <input type = "text" id = "employeePosition-input" placeholder = "Associate/Supervisor" class='input'></input>
+                <br>                
+                <label>Phone Number</label>
+                <input type = "text" id = "employeePhoneNumber-input" placeholder = "123-456-7890" class='input'></input>
+                <br>
+                <br>
+                <button id = "add-employee-btn" class='button'>Submit</button>
+            </form>
+        <div class="row centered mt grid">
+            <div class id="myTable"></div>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th>employeeID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Position</th>
+                        <th>Phone Number</th>
+                    </thead>
+                </tr>
+                <tbody>
+                    {{#each employeesResults.rows}}
+                        <tr id=`employees-row-{{this.employeeID}}`>
+                            <form>
+                                <td><input id=`employees-editEmployeeID-{{this.employeeID}}` class='input' type="number" value = {{this.employeeID}} disabled></td>
+                                <td><input id=`employees-editFirstName-{{this.employeeID}}` class='input' type="text" value = '{{{this.fname}}}' disabled></td>
+                                <td><input id=`employees-editLastName-{{this.employeeID}}` class='input' type="text" value = '{{{this.lname}}}' disabled></td>
+                                <td><input id=`employees-editPosition-{{this.employeeID}}` class='input' type="text" value = '{{{this.position}}}' disabled></td>
+                                <td><input id=`employees-editPhoneNumber-{{this.employeeID}}` class='input' type="text" value = '{{{this.phoneNumber}}}' disabled></td>                                
+                                <td><button type = 'button' id=`employees-edit-{{this.employeeID}}` onclick="updateEmployee('`employees-edit-{{this.employeeID}}`', {{this.employeeID}})" class='editButton button'>Edit</button></td>
+                                <td><button id=`employees-delete-{{this.employeeID}}` onclick="deleteEmployee({{this.employeeID}})" class='deleteButton button'>Delete</button></td>
+                            </form>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </main>    
+
+</body>
+<script src = "/employees.js"></script>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="keywords">
+    <meta content="" name="description">  
+    <title>Accounts</title>
+    <link rel="stylesheet" href="css/style.css">  
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h4 class="title is-4">Add an Account</h4>
+            <form >
+                <label>Customer ID</label>
+                <div class='select'>
+                    <select name="customerID-input" id="customerID-input-accounts">
+                        <option value="">Select a Customer</option>
+                        {{#each custResults.rows}}
+                        <option value="{{this.customerID}}">{{this.customerID}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <br>
+                <label>Email</label>
+                <input type = "text" id = "email-input" placeholder = "name@email.com" class='input'></input>
+                <br>
+                <label>Address</label>
+                <input type = "text" id = "address-input" placeholder="Address" class='input'></input>
+                <br>
+                <button id = "add-account-btn" class='button'>Submit</button>
+            </form>
+        <br>
+        <div class="row centered mt grid">
+            <div class id="myTable"></div>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th>accountID</th>
+                        <th>customerID</th>
+                        <th>email</th>
+                        <th>address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each accountsResults.rows}}
+                    <tr id=`accounts-row-{{this.acccountID}}`>
+                        <form>
+                            <td><input id=`accounts-editAccountID-{{this.accountID}}` class='input' type="number" value = {{this.accountID}} disabled></td>
+                            <td><input id=`accounts-editCustomerID-{{this.accountID}}` class='input' type="number" value = '{{{this.customerID}}}' disabled></td>
+                            <td><input id=`accounts-editEmail-{{this.accountID}}` class='input' type="text" value = '{{{this.email}}}' disabled></td>
+                            <td><input id=`accounts-editAddress-{{this.accountID}}` class='input' type="text" value = '{{{this.address}}}' disabled></td>
+                            <td><button type = 'button' id=`accounts-edit-{{this.accountID}}` onclick="updateAccount('`accounts-edit-{{this.accountID}}`', {{this.accountID}})" class='editButton button'>Edit</button></td>
+                            <td><button id=`accountsdelete-{{this.accountID}}` onclick="deleteAccount({{this.accountID}})" class='deleteButton button'>Delete</button></td>
+                        </form>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </main>    
+</body>
+<script src = "/accounts.js"></script>
+
+</html>
