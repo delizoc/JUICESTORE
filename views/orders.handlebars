@@ -13,8 +13,9 @@
 <body>
     <main>
         <div class="container">
-            <h4 class="title is-4">Add a New Order</h4>
-            <form >
+            <br>
+            <h4 class="title is-4"><strong>Add a New Order</strong></h4>
+            <form name="orders_info"  id="orders_info" class="inputborder">
                 <label>Customer ID</label>
                 <br>
                 <div class='select'>
@@ -26,7 +27,7 @@
                     </select>
                 </div>
                 <br>
-                <label>Employee ID</label>
+                <label>Employee ID (optional)</label>
                 <br>
                 <div class='select'>
                     <select name="employeeID-input" id="employeeID-input-orders">
@@ -40,9 +41,11 @@
                 <label>Order Item IDs - Select one or more products</label>
                 <br>
                 <div class='select is-multiple'>
+                    <select name="itemID-input" id="itemID-input-orders" multiple='multiple'>
                         {{#each itemResults.rows}}
-                        <input type = 'checkbox' name="itemID-input" id="itemID-input-orders" multiple='multiple' value="{{this.itemID}}">{{this.name}}</input>
+                        <option value="{{this.itemID}}">{{this.name}}</option>
                         {{/each}}
+                    </select>
                 </div>
                 <br>
                 <button id = "add-order-btn" class='button'>Submit</button>
@@ -50,14 +53,14 @@
         <div class="row centered mt grid">
             <div class id="myTable"></div>
             <table id="myTable" class="table">
-                <thead>
                     <tr>
                         <th>orderID</th>
                         <th>customerID</th>
                         <th>employeeID</th>
-                        <th>Total Price</th>
-                    </thead>
-                </tr>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
                 <tbody>
                     {{#each ordersResults.rows}}
                         <tr id=`orders-row-{{this.orderID}}`>
@@ -65,15 +68,30 @@
                                 <td><input id=`orders-editOrderID-{{this.orderID}}` class='input' type="number" value = {{this.orderID}} disabled></td>
                                 <td><input id=`orders-editCustomerID-{{this.orderID}}` class='input' type="number" value = {{this.customerID}} disabled></td>
                                 <td><input id=`orders-editEmployeeID-{{this.orderID}}` class='input' type="number" value = {{this.employeeID}} disabled></td>
-                                <td></td>
-                                <td><button type = 'button' id=`orders-edit-{{this.orderID}}` onclick="updateOrder('`orders-edit-{{this.orderID}}`', {{this.orderID}})" class='editButton button'>Edit</button></td>
-                                <td><button id=`orders-delete-{{this.orderID}}` onclick="deleteOrder({{this.orderID}})" class='deleteButton button'>Delete</button></td>
-                            </form>
-                        </tr>
+                               <!-- <td><input id=`orders-editTotalPrice-{{this.orderID}}` class='input' type="number" value= {{this.total}} disabled></td>-->
+                                <td><button type = 'button' id=`orders-edit-{{this.orderID}}` onclick="updateOrder('`orders-edit-{{this.orderID}}`', {{this.orderID}})" class='editButton_button'>Edit</button></td>
+                                <td><button id=`orders-delete-{{this.orderID}}` onclick="deleteOrder({{this.orderID}})" class='deleteButton_button'>Delete</button></td>
+                    </form>
+                    </tr>
                     {{/each}}
                 </tbody>
             </table>
-        </div>
+        <div class="row centered mt grid"></div>
+            <div class id="myTable"></div>
+            <table id="myTable" class="table">  
+            <thead>
+            <th>Order ID</th>
+            <th>Total Price</th>
+            </thead>
+            <tbody>
+            {{#each totalPriceResults.rows}}
+            <tr>
+                <td><input value = {{this.orderID}} disabled></td>
+                <td><input value = {{this.total}} disabled></td>
+            </tr>
+            {{/each}}
+        </tbody>
+  
     </main>    
     
 </body>

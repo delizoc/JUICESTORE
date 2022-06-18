@@ -13,32 +13,71 @@
 <body>
     <main>
         <div class="container">
-            <h4 class="title is-4">Add Item</h4>
-            <form >
+            <br>
+            <h4 class="title is-4"><strong>Add Item</strong></h4>
+            <form name="item_info"  id="item_info"  class="inputborder">
                 <label>Item Name</label>
-                <input type = "text" id = "name-input" placeholder = "Name" class='input'></input>
+                <input type = "text" id = "name-input" placeholder = "Name" class='input' onkeyup ="nameUp()"></input>
                 <br>
                 <label>Price</label>
-                <input type = "decimal" id = "price-input" placeholder = "0.00" class='input'></input>
+                <input type = "decimal" id = "price-input" placeholder = "0.00" class='input' onkeyup ="priceUp()"></input>
                 <br>
-                <button id = "add-item-btn" class='button'>Submit</button>
+                <button id = "add-item-btn" class='button' function="return view(event)">Submit</button>
             </form>
+            <script>
+                function nameUp() {
+                    console.log("item name entered");
+                    if(document.getElementById("name-input").textLength != 0 && document.getElementById("name-input").textLength != 0) {
+                        document.getElementById("add-item-btn").disabled = false;
+                    }
+                    else {
+                        document.getElementById("add-item-btn").disabled = true;
+                    }
+                }
+                function priceUp() {
+                    console.log("price entered");
+                    if(document.getElementById("price-input").textLength != 0 && document.getElementById("price-input").textLength != 0) {
+                        document.getElementById("add-item-btn").disabled = false;
+                    }
+                    else {
+                        document.getElementById("add-item-btn").disabled = true;
+                    }
+                }
 
+                function view(event){
+                    event.preventDefault(); 
+                    email = document.getElementById("name-input").textLength;
+                    address = document.getElementById("price-input").textLength;
+                    if(email == 0 && address == 0){
+                        document.getElementById("add-item-btn").disabled = true;
+                        console.log("should not submit");
+                        return false;
+                    }
+                    else if (email>0 && address>0){
+                        console.log("should submit");
+                        document.getElementById("add-item-btn").disabled = false;
+                        document.getElementById('item_info').submit();
+                    }
+                }
+
+                window.onload = (event) => {
+                    // insert code here
+                    document.getElementById("add-item-btn").disabled = true;
+                };
+            </script>
         <br>
         <div class="container">
-            <input type = 'text' onkeyup='filterItems()' placeholder="Search" id="search-input" class="input">
+            <input type = 'text'  placeholder="Search by Name" onkeyup='filterItems()' id="search-input" class="input">
             <button id="search-btn" class="button">Search</button>
         <br>
         <div class="row centered mt grid">
-            <div class id="myTable"></div>
-            <table id="myTable" class="table">
-                <thead>
+            <div class id="myTable">
+            <table id="myTable-input" class="table">
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
                         <th>Price</th>
-                    </thead>
-                </tr>
+                    </tr>
                 <tbody>
                     {{#each itemsResults.rows}}
                         <tr id=`items-row-{{this.itemID}}`>
@@ -46,14 +85,16 @@
                                 <td><input id=`items-editItemID-{{this.itemID}}` class='input' type="number" value = {{this.itemID}} disabled></td>
                                 <td><input id=`items-editName-{{this.itemID}}` class='input' type="text" value = '{{{this.name}}}' disabled></td>
                                 <td><input id=`items-editPrice-{{this.itemID}}` class='input' type="decimal" value = '{{{this.price}}}' disabled></td>
-                                <td><button type = 'button' id=`items-edit-{{this.itemID}}` onclick="updateItem('`items-edit-{{this.itemID}}`', {{this.itemID}})" class='editButton button'>Edit</button></td>
-                                <td><button id=`items-delete-{{this.itemID}}` onclick="deleteItem({{this.itemID}})" class='deleteButton button'>Delete</button></td>
+                                <td><button type = 'button' id=`items-edit-{{this.itemID}}` onclick="updateItem('`items-edit-{{this.itemID}}`', {{this.itemID}})" class='editButton_button'>Edit</button></td>
+                                <td><button id=`items-delete-{{this.itemID}}` onclick="deleteItem({{this.itemID}})" class='deleteButton_button'>Delete</button></td>
                             </form>
                         </tr>
                     {{/each}}
                 </tbody>
             </table>
+            </div>
         </div>
+        <br>
 </body>
 <script src = "/items.js"></script>
 </html>

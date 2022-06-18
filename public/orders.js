@@ -25,7 +25,11 @@ async function addOrder() {
     let data = {};
 
     data.customerID = oCust.value;
-    data.employeeID = oEmp.value;
+    if (oEmp.value === ""){
+      data.employeeID = null
+    }else{
+      data.employeeID = oEmp.value;
+    }
 
     try {
       const response = await fetch(`http://${SERVER}:${PORT}/insert-Order`, {
@@ -61,6 +65,8 @@ async function addOrder() {
   })
 }
 
+
+
 async function deleteOrder(row_id) {
   let payload = {}
   payload.orderID = row_id
@@ -73,7 +79,7 @@ async function deleteOrder(row_id) {
     body: JSON.stringify(payload)
   })
   if (response.status == 200) {
-    window.location.reload(true);
+    //window.location.reload(true);
   }
 }
 
@@ -82,23 +88,26 @@ async function updateOrder(edit_button, order_id) {
   // enable editing of inputs
   document.getElementById('`orders-editCustomerID-' + order_id + '`').disabled = false
   document.getElementById('`orders-editEmployeeID-' + order_id + '`').disabled = false
-
+  
   let edit_button_object = document.getElementById(edit_button)
   edit_button_object.innerText = 'Update'
   // upon clicking update, UPDATE request sent and page reloads
   edit_button_object.onclick = async function (event) {
     let payload = {}
+    let custId = document.getElementById('`orders-editCustomerID-' + order_id + '`').value
     payload.orderID = order_id
-    payload.customerID = document.getElementById('`orders-editCustomerID-' + order_id + '`').value
-    payload.employeeID = document.getElementById('`orders-editEmployeeID-' + order_id + '`').value
+    payload.customerID = Math.floor(Number(custId))
+    let empId = document.getElementById('`orders-editEmployeeID-' + order_id + '`').value;
+    payload.employeeID = Math.floor(Number(empId))
 
-    const response = await fetch(`http://${SERVER}:${PORT}/update-Order`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
+    const response = await fetch(`http://${SERVER}:${PORT}/update-Order`,
+    {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+              },
+          body: JSON.stringify(payload)
+        })
     // reload page upon success to reset buttons to disabled and show new values
     if (response.status == 200) {
       window.location.reload(true)

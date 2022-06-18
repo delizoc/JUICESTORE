@@ -7,8 +7,8 @@ const express = require('express');   // We are using the express library for th
 const app     = express();            // We need to instantiate an express object to interact with the server in our code
 
 var path = require('path');
-const HOSTNAME = process.env.HOSTNAME || 'localhost'
 app.set('port', 3000);
+const HOSTNAME = process.env.HOSTNAME || 'localhost'
 
 
 // Set up handlebars
@@ -28,13 +28,15 @@ const db = require('./database/db-connector')
 //GET
 const getLatestOrder = 'SELECT orderID FROM Orders ORDER BY orderID DESC LIMIT 1;'
 
+
 //DISPLAY
 const displayAccounts = 'SELECT * FROM Accounts ORDER BY accountID;';
 const displayCustomers = 'SELECT * FROM Customers ORDER BY customerID;';
 const displayEmployees = 'SELECT * FROM Employees ORDER BY employeeID;';
 const displayItems = 'SELECT * FROM Items ORDER BY itemID;';
-const displayOrders = 'SELECT * FROM Orders ORDER BY orderID;';
+const displayOrders = 'SELECT * FROM Orders ORDER BY orderID; ';
 const displayPurchaseOrders= 'SELECT * FROM PurchaseOrders ORDER BY orderID;';
+const displayTotalPrice = 'SELECT PurchaseOrders.orderID, SUM(Items.price) as total FROM PurchaseOrders INNER JOIN Items ON PurchaseOrders.itemID=Items.itemID GROUP BY orderID;';
 
 //DELETE
 const deleteAccount = 'DELETE FROM Accounts WHERE accountID = ?;';
@@ -49,8 +51,8 @@ const updateAccount = 'UPDATE Accounts SET customerID = ?, email = ?, address = 
 const updateCustomer = 'UPDATE Customers SET fname = ?, lname = ? WHERE customerID = ?;';
 const updateEmployee = 'UPDATE Employees SET fname = ?, lname = ?, position = ?, phoneNumber = ? WHERE employeeID = ?;';
 const updateItem = 'UPDATE Items SET name = ?, price = ? WHERE itemID = ?;';
-const updateOrder = 'UPDATE Orders SET customerID = ?, employeeID = ?, WHERE orderID = ?;';
-const updatePurchaseOrder = 'UPDATE PurchaseOrders SET orderID = ?, itemID = ? WHERE orderID = ? and itemID = ?;';
+const updateOrder = 'UPDATE Orders SET customerID = ?, employeeID = ? WHERE orderID = ?;';
+const updatePurchaseOrder = 'UPDATE PurchaseOrders SET orderID = ?, itemID = ? WHERE orderID = ? AND itemID = ?;';
 
 //INSERT
 const insertAccount = 'INSERT INTO Accounts(customerID, email, address) VALUES(?,?,?);';
@@ -58,7 +60,7 @@ const insertCustomer = 'INSERT INTO Customers(fname, lname) VALUES(?,?);';
 const insertEmployee = 'INSERT INTO Employees(fname, lname, position, phoneNumber) VALUES(?,?,?,?);';
 const insertItem = 'INSERT INTO Items(name, price) VALUES(?,?);';
 const insertOrder = 'INSERT INTO Orders(employeeID, customerID) VALUES(?,?);';
-const insertPurchaseOrder = 'INSERT INTO PurchaseOrders(orderID, itemID) VALUES(?,?);';
+
 
 // Home Page
 app.get('/',function(req,res,next){
@@ -239,6 +241,7 @@ app.delete('/delete-Item',function(req,res,next){
 });
   
 app.put('/update-Item',function(req,res,next){
+    console.log("HI");
     db.pool.query(updateItem, [req.body.name, req.body.price, req.body.itemID], function(err, result){
       if(err){
         next(err);
@@ -247,6 +250,7 @@ app.put('/update-Item',function(req,res,next){
       res.send(result);
     });
 });
+
 
 // Orders Page
 app.get('/Orders',function(req,res,next){
@@ -275,7 +279,14 @@ app.get('/Orders',function(req,res,next){
             return;
           }
           context.itemResults = {rows: rows}
-          res.render('orders', context);
+          db.pool.query(displayTotalPrice, function(err, rows, fields){
+            if(err){
+              next(err);
+              return;
+            }
+            context.totalPriceResults = {rows: rows}
+            res.render('orders', context);
+          });
         });
       });
     });
@@ -315,6 +326,7 @@ app.delete('/delete-Order',function(req,res,next){
 });
   
 app.put('/update-Order',function(req,res,next){
+  console.log(req.body)
     db.pool.query(updateOrder, [req.body.customerID, req.body.employeeID, req.body.orderID], function(err, result){
       if(err){
         next(err);
@@ -351,6 +363,7 @@ app.get('/purchaseOrders',function(req,res,next){
     });
   });
 });
+
 app.post('/insert-PurchaseOrder', (req, res, next) =>{
   const {orderId, filteredItems} = req.body;
   let query = 'INSERT INTO PurchaseOrders(orderID, itemID) VALUES ';

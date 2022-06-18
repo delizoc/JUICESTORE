@@ -13,8 +13,9 @@
 <body>
     <main>
         <div class="container">
-            <h4 class="title is-4">Add an Account</h4>
-            <form >
+            <br>
+            <h4 class="title is-4"><strong>Add an Account</strong></h4>
+            <form name="account_info"  id="account_info"  class="inputborder">
                 <label>Customer ID</label>
                 <div class='select'>
                     <select name="customerID-input" id="customerID-input-accounts">
@@ -26,13 +27,54 @@
                 </div>
                 <br>
                 <label>Email</label>
-                <input type = "text" id = "email-input" placeholder = "name@email.com" class='input'></input>
+                <input type = "text" id = "email-input" placeholder = "name@email.com" class='input' onkeyup ="emailUp()"></input>
                 <br>
                 <label>Address</label>
-                <input type = "text" id = "address-input" placeholder="Address" class='input'></input>
+                <input type = "text" id = "address-input" placeholder="Address" class='input' onkeyup ="addressUp()"></input>
                 <br>
-                <button id = "add-account-btn" class='button'>Submit</button>
+                <button id = "add-account-btn" class='button' function="return view(event)">Submit</button>
             </form>
+            <script>
+                function emailUp() {
+                    console.log("email entered");
+                    if(document.getElementById("email-input").textLength != 0 && document.getElementById("email-input").textLength != 0) {
+                        document.getElementById("add-account-btn").disabled = false;
+                    }
+                    else {
+                        document.getElementById("add-account-btn").disabled = true;
+                    }
+                }
+                function addressUp() {
+                    console.log("address entered");
+                    if(document.getElementById("address-input").textLength != 0 && document.getElementById("address-input").textLength != 0) {
+                        document.getElementById("add-account-btn").disabled = false;
+                    }
+                    else {
+                        document.getElementById("add-account-btn").disabled = true;
+                    }
+                }
+
+                function view(event){
+                    event.preventDefault(); 
+                    email = document.getElementById("email-input").textLength;
+                    address = document.getElementById("address-input").textLength;
+                    if(email == 0 && address == 0){
+                        document.getElementById("add-account-btn").disabled = true;
+                        console.log("should not submit");
+                        return false;
+                    }
+                    else if (email>0 && address>0){
+                        console.log("should submit");
+                        document.getElementById("add-account-btn").disabled = false;
+                        document.getElementById('account_info').submit();
+                    }
+                }
+
+                window.onload = (event) => {
+                    // insert code here
+                    document.getElementById("add-account-btn").disabled = true;
+                };
+            </script>
         <br>
         <div class="row centered mt grid">
             <div class id="myTable"></div>
@@ -53,8 +95,8 @@
                             <td><input id=`accounts-editCustomerID-{{this.accountID}}` class='input' type="number" value = '{{{this.customerID}}}' disabled></td>
                             <td><input id=`accounts-editEmail-{{this.accountID}}` class='input' type="text" value = '{{{this.email}}}' disabled></td>
                             <td><input id=`accounts-editAddress-{{this.accountID}}` class='input' type="text" value = '{{{this.address}}}' disabled></td>
-                            <td><button type = 'button' id=`accounts-edit-{{this.accountID}}` onclick="updateAccount('`accounts-edit-{{this.accountID}}`', {{this.accountID}})" class='editButton button'>Edit</button></td>
-                            <td><button id=`accountsdelete-{{this.accountID}}` onclick="deleteAccount({{this.accountID}})" class='deleteButton button'>Delete</button></td>
+                            <td><button type = 'button' id=`accounts-edit-{{this.accountID}}` onclick="updateAccount('`accounts-edit-{{this.accountID}}`', {{this.accountID}})" class='editButton_button'>Edit</button></td>
+                            <td><button id=`accountsdelete-{{this.accountID}}` onclick="deleteAccount({{this.accountID}})" class='deleteButton_button'>Delete</button></td>
                         </form>
                     </tr>
                 {{/each}}

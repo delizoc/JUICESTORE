@@ -13,23 +13,86 @@
 <body>
     <main>
         <div class="container">
-            <h4 class="title is-4">Add Employee</h4>
-            <form>
+            <br>
+            <h4 class="title is-4"><strong>Add Employee</strong></h4>
+            <form name="employee_info"  id="employee_info" class="inputborder">
                 <label>First Name</label>
-                <input type = "text" id = "employeeFname-input" placeholder = "" class='input'></input>
+                <input type = "text" id = "employeeFname-input" placeholder = "" class='input' onkeyup ="firstNameUp()"></input>
                 <br>
                 <label>Last Name</label>
-                <input type = "text" id = "employeeLname-input" placeholder="" class='input'></input>
+                <input type = "text" id = "employeeLname-input" placeholder="" class='input' onkeyup ="lastNameUp()"></input>
                 <br>
                 <label>Position</label>
-                <input type = "text" id = "employeePosition-input" placeholder = "Associate/Supervisor" class='input'></input>
+                <input type = "text" id = "employeePosition-input" placeholder = "Associate/Supervisor" class='input' onkeyup ="positionUp()"></input>
                 <br>                
                 <label>Phone Number</label>
-                <input type = "text" id = "employeePhoneNumber-input" placeholder = "123-456-7890" class='input'></input>
+                <input type = "text" id = "employeePhoneNumber-input" placeholder = "123-456-7890" class='input' onkeyup ="phonenumberUp()"></input>
                 <br>
                 <br>
-                <button id = "add-employee-btn" class='button'>Submit</button>
+                <button id = "add-employee-btn" class='button' function="return view(event)">Submit</button>
             </form>
+            <script>
+                function firstNameUp() {
+                    console.log("firstname entered");
+                    if(document.getElementById("employeeFname-input").textLength != 0 && document.getElementById("employeeFname-input").textLength != 0) {
+                        document.getElementById("add-employee-btn").disabled = false;
+                    }
+                    else {
+                        document.getElementById("add-employee-btn").disabled = true;
+                    }
+                }
+                function lastNameUp() {
+                    console.log("lastname entered");
+                    if(document.getElementById("employeeLname-input").textLength != 0 && document.getElementById("employeeLname-input").textLength != 0) {
+                        document.getElementById("add-employee-btn").disabled = false;
+                    }
+                    else {
+                        document.getElementById("add-employee-btn").disabled = true;
+                    }
+                }
+                function positionUp() {
+                    console.log("position entered");
+                    if(document.getElementById("employeePosition-input").textLength != 0 && document.getElementById("employeePosition-input").textLength != 0) {
+                        document.getElementById("add-employee-btn").disabled = false;
+                    }
+                    else {
+                        document.getElementById("add-employee-btn").disabled = true;
+                    }
+                }
+                function phonenumberUp() {
+                    console.log("phone number entered");
+                    if(document.getElementById("employeePhoneNumber-input").textLength != 0 && document.getElementById("employeePhoneNumber-input").textLength != 0) {
+                        document.getElementById("add-employee-btn").disabled = false;
+                    }
+                    else {
+                        document.getElementById("add-employee-btn").disabled = true;
+                    }
+                }
+
+                function view(event){
+                    event.preventDefault(); 
+                    fname = document.getElementById("employeeFname-input").textLength;
+                    lname = document.getElementById("employeeLname-input").textLength;
+                    position = document.getElementById("employeePosition-input").textLength;
+                    phonenumber = document.getElementById("employeePhoneNumber-input").textLength;
+                    
+                    if(fname == 0 && lname == 0 && position == 0 && phonenumber == 0){
+                        document.getElementById("add-employee-btn").disabled = true;
+                        console.log("should not submit");
+                        return false;
+                    }
+                    else if (fname>0 && lname>0 && position>0 && phonenumber>0){
+                        console.log("should submit");
+                        document.getElementById("add-employee-btn").disabled = false;
+                        document.getElementById('employee_info').submit();
+                    }
+                }
+
+                window.onload = (event) => {
+                    // insert code here
+                    document.getElementById("add-employee-btn").disabled = true;
+                };
+            </script>
         <div class="row centered mt grid">
             <div class id="myTable"></div>
             <table id="myTable" class="table">
@@ -40,8 +103,8 @@
                         <th>Last Name</th>
                         <th>Position</th>
                         <th>Phone Number</th>
-                    </thead>
-                </tr>
+                    </tr>
+                </thead>
                 <tbody>
                     {{#each employeesResults.rows}}
                         <tr id=`employees-row-{{this.employeeID}}`>
@@ -51,8 +114,8 @@
                                 <td><input id=`employees-editLastName-{{this.employeeID}}` class='input' type="text" value = '{{{this.lname}}}' disabled></td>
                                 <td><input id=`employees-editPosition-{{this.employeeID}}` class='input' type="text" value = '{{{this.position}}}' disabled></td>
                                 <td><input id=`employees-editPhoneNumber-{{this.employeeID}}` class='input' type="text" value = '{{{this.phoneNumber}}}' disabled></td>                                
-                                <td><button type = 'button' id=`employees-edit-{{this.employeeID}}` onclick="updateEmployee('`employees-edit-{{this.employeeID}}`', {{this.employeeID}})" class='editButton button'>Edit</button></td>
-                                <td><button id=`employees-delete-{{this.employeeID}}` onclick="deleteEmployee({{this.employeeID}})" class='deleteButton button'>Delete</button></td>
+                                <td><button type = 'button' id=`employees-edit-{{this.employeeID}}` onclick="updateEmployee('`employees-edit-{{this.employeeID}}`', {{this.employeeID}})" class='editButton_button'>Edit</button></td>
+                                <td><button id=`employees-delete-{{this.employeeID}}` onclick="deleteEmployee({{this.employeeID}})" class='deleteButton_button'>Delete</button></td>
                             </form>
                         </tr>
                     {{/each}}

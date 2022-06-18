@@ -13,8 +13,9 @@
 <body>
     <main>
         <div class="container">
-            <h4 class="title is-4">Add a New PurchaseOrder</h4>
-            <form >
+            <br>
+            <h4 class="title is-4"><strong>Add a New PurchaseOrder</strong></h4>
+            <form class="inputborder">
                 <label>Order ID</label>
                 <br>
                 <div class='select'>
@@ -32,7 +33,7 @@
                     <select name="itemID-input" id="itemID-input-purchaseOrders">
                         <option value="">Select an Item</option>
                         {{#each itResults.rows}}
-                        <option value="{{this.itemID}}">{{this.name}}</option>
+                        <option value="{{this.itemID}}">{{this.itemID}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -46,16 +47,17 @@
                     <tr>
                         <th>orderID</th>
                         <th>itemID</th>
+                        <th></th>
                     </thead>
                 </tr>
                 <tbody>
                     {{#each purchaseOrdersResults.rows}}
                         <tr id=`purchaseOrders-row-{{this.ID}}`>
                             <form>
-                                <td><input id=`purchaseOrders-editOrderID-{{this.orderID}}-{{this.itemID}}` class='input' type="number" value = {{this.orderID}} disabled></td>
-                                <td><input id=`purchaseOrders-editItemID-{{this.orderID}}-{{this.itemID}}` class='input' type="number" value = {{this.itemID}} disabled></td>
-                                <td><button type = 'button' id=`purchaseOrders-edit-{{this.orderID}}-{{this.itemID}}` onclick="updatePurchaseOrder('`purchaseOrders-edit-{{this.orderID}}-{{this.itemID}}`', {{this.orderID}}-{{this.itemID}})" class='editButton button'>Edit</button></td>
-                                <td><button id=`purchaseOrders-delete-{{this.orderID}}-{{this.itemID}}` onclick="deletepurchaseOrder({{this.orderID}}, {{this.itemID}})" class='deleteButton button'>Delete</button></td>
+                                <td><input id=`purchaseOrders-editOrderID-{{this.orderID}}-{{this.itemID}}` class='input' type="number" value = '{{{this.orderID}}}' disabled></td>
+                                <td><input id=`purchaseOrders-editItemID-{{this.orderID}}-{{this.itemID}}` class='input' type="number" value = '{{{this.itemID}}}' disabled></td>
+                                <!--<td><button type = 'button' id=`purchaseOrders-edit-{{this.orderID}}-{{this.itemID}}` onclick="updatePurchaseOrder('`purchaseOrders-edit-{{this.orderID}}-{{this.itemID}}`', {{this.orderID}},{{this.itemID}})" class='editButton_button'>Edit</button></td>-->
+                                <td><button id=`purchaseOrders-delete-{{this.orderID}}-{{this.itemID}}` onclick="deletepurchaseOrder({{this.orderID}}, {{this.itemID}})" class='deleteButton_button'>Delete</button></td>
                             </form>
                         </tr>
                     {{/each}}

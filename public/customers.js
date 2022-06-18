@@ -10,22 +10,29 @@ function addCustomer(){
 
         let req = new XMLHttpRequest();
         let data = {};
+        
+        
 
+        
         data.fname = firstname.value;
         data.lname = lastname.value;
-        // console.log(data)
-
-        req.open("POST", '/insert-Customer', true);
-        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-        req.addEventListener('load', () => {
-            if(req.status >= 200 && req.status < 400){
-                window.location.reload(true);
-            } else{
-                alert("Error - Please double check input fields");
-            }
-        })
-        // console.log(req);
-        req.send(JSON.stringify(data));
+        if (data.fname === "" || data.lname === ""){
+            console.log(data)
+            window.alert("Error - Please double check input fields");
+            return;
+        }
+        else{
+            req.open("POST", '/insert-Customer', true);
+            req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            req.addEventListener('load', () => {
+                if(req.status >= 200 && req.status < 400){
+                    window.location.reload(true);
+                } else{
+                    alert("Error - Please double check input fields");
+                }
+            })
+            req.send(JSON.stringify(data));
+        }
     })
 }
 

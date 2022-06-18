@@ -9,7 +9,10 @@ function addItem(){
         
         let req = new XMLHttpRequest();
         let data = {};
-
+        if (iname.value === "" || iprice.value === ""){
+            window.alert("Error - Please double check input fields");
+            return;
+        }
         data.name = iname.value;
         data.price = iprice.value;
         
@@ -32,7 +35,7 @@ function addItem(){
 function filterItems(){
     let filter_input = document.querySelector('#search-input');
     let current_filter = filter_input.value;
-    let items_table = document.querySelector('#items-table');
+    let items_table = document.querySelector('#myTable-input');
     let items_rows = items_table.getElementsByTagName('tr');
     for (let i = 0; i < items_rows.length; i++){
         // get text value to compare to search string
@@ -47,6 +50,7 @@ function filterItems(){
             }
         }
     }
+    
 }
 
 
@@ -76,14 +80,16 @@ async function updateItem(edit_button, item_id){
     // upon clicking update, UPDATE request sent and page reloads
     edit_button_object.onclick = async function(event) {
         let payload = {}
-        payload.item_ID = item_id
+        payload.itemID = item_id
         payload.name = document.getElementById('`items-editName-' + item_id + '`').value
         payload.price = document.getElementById('`items-editPrice-' + item_id + '`').value
+        console.log(payload.name);
+        console.log(payload.price);
         
-        const response = await fetch(`http://${SERVER}:${PORT}update-Item`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
+        const response = await fetch(`http://${SERVER}:${PORT}/update-Item`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
             },
         body: JSON.stringify(payload)
         })

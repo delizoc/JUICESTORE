@@ -6,16 +6,24 @@ function addAccount(){
         event.preventDefault()
         let custID = document.querySelector('#customerID-input-accounts');
         let cemail = document.querySelector('#email-input');
-        let address = document.querySelector('#address-input');
+        let caddress = document.querySelector('#address-input');
         
 
         let req = new XMLHttpRequest();
         let data = {};
-
+        if (custID.value === "" || cemail.value === ""){
+            window.alert("Error - Please double check input fields");
+            return;
+        }
+        
         data.customerID = custID.value;
         data.email = cemail.value;
-        data.address = address.value;
-        
+        if (caddress.value ===""){
+            data.address = null;
+        }
+        else{
+            data.address = caddress.value;
+        }
         req.open("POST", '/insert-Account', true);
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.addEventListener('load', () => {

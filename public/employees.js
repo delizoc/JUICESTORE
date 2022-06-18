@@ -13,11 +13,29 @@ function addEmployee(){
         let req = new XMLHttpRequest();
         let data = {};
 
+        
+        if (efname.value === "" || elname.value === "" || eposition.value === ""){
+            window.alert("Error - Please double check input fields");
+            return;
+        }
+        
+        if (eposition.value == "Supervisor" || eposition.value == "Associate"){
+            data.position = eposition.value;
+        }
+        else {
+            window.alert("Error - Please double check position input");
+            return;
+        }
         data.fname = efname.value;
         data.lname = elname.value;
-        data.position = eposition.value;
-        data.phoneNumber = ephoneNumber.value;
-
+        
+        if (ephoneNumber.value === ""){
+            data.phoneNumber = null
+        }else{
+            data.phoneNumber = ephoneNumber.value;
+        }
+        
+        
         req.open("POST", '/insert-Employee', true);
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.addEventListener('load', () => {
@@ -65,8 +83,11 @@ async function updateEmployee(edit_button, emp_id){
         payload.fname = document.getElementById('`employees-editFirstName-' + emp_id + '`').value
         payload.lname = document.getElementById('`employees-editLastName-' + emp_id + '`').value
         payload.position = document.getElementById('`employees-editPosition-' + emp_id + '`').value
-        payload.phoneNumber = document.getElementById('`employees-editPhoneNumber-' + emp_id + '`').value
-        
+        if (document.getElementById('`employees-editPhoneNumber-' + emp_id + '`').value === ""){
+            payload.phoneNumber = null
+        }else{
+            payload.phoneNumber = document.getElementById('`employees-editPhoneNumber-' + emp_id + '`').value
+        }
         const response = await fetch(`http://${SERVER}:${PORT}/update-Employee`, {
         method: 'PUT',
         headers: {

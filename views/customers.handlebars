@@ -13,16 +13,18 @@
 <body>
     <main>
         <div class="container">
-            <h4 class="title is-4">Add a New Customer</h4>
-            <form >
+            <br>
+            <h4 class="title is-4"><strong>Add a New Customer</strong></h4>
+            <form name="customer_info"  id="customer_info" class="inputborder">
                 <label>First Name</label>
-                <input type = "text" id = "custFirstName-input" placeholder = "First Name" class='input'></input>
+                <input type = "text" id = "custFirstName-input" class='input' placeholder="First Name" ></input>
                 <br>
                 <label>Last Name</label>
-                <input type = "text" id = "custLastName-input" placeholder="Last Name" class='input'></input>
+                <input type = "text" id = "custLastName-input" class='input' placeholder="Last Name" ></input>
                 <br>
-                <button id = "add-cust-btn" class='button'>Submit</button>
+                <button name="add-cust-btn" id = "add-cust-btn" function="return view(event)" >Submit</button>
             </form>
+
         <br>
         <div class="row centered mt grid">
             <div class id="myTable"></div>
@@ -41,8 +43,8 @@
                             <td><input id=`customers-editCustomerID-{{this.customerID}}` class='input' type="number" value = {{this.customerID}} disabled></td>
                             <td><input id=`customers-editFirstName-{{this.customerID}}` class='input' type="text" value = '{{{this.fname}}}' disabled></td>
                             <td><input id=`customers-editLastName-{{this.customerID}}` class='input' type="text" value = '{{{this.lname}}}' disabled></td>
-                            <td><button type = 'button' id=`customers-edit-{{this.customerID}}` onclick="updateCustomer('`customers-edit-{{this.customerID}}`', {{this.customerID}})" class='editButton button'>Edit</button></td>
-                            <td><button id=`customers-delete-{{this.customerID}}` onclick="deleteCustomer({{this.customerID}})" class='deleteButton button'>Delete</button></td>
+                            <td><button type = 'button' id=`customers-edit-{{this.customerID}}` onclick="updateCustomer('`customers-edit-{{this.customerID}}`', {{this.customerID}})" class='editButton_button'>Edit</button></td>
+                            <td><button id=`customers-delete-{{this.customerID}}` onclick="deleteCustomer({{this.customerID}})" class='deleteButton_button'>Delete</button></td>
                         </form>
                     </tr>
                 {{/each}}
