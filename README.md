@@ -1,5 +1,5 @@
 # JUICESTORE
-To be used with mySQL database
+To be used with mySQL database originally used with MariaDB
 
 1. Within the main project folder navigate to /database/db-connector.js. Ensure all information for creating a pool is correct.
     NOTE: you will need to create a new db named 'juice' in mySQL. copy 'ProjectDDQ.sql' into newly     created 'juice' db. This is a starter database with fake data.
